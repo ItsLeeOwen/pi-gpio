@@ -246,7 +246,7 @@ That's it!
 
 ## Usage
 
-### .open(pinNumber, [options], [callback])
+### .open(pinNumber, [options])
 
 Aliased to ``.export``
 
@@ -254,38 +254,35 @@ Makes ``pinNumber`` available for use.
 
 * ``pinNumber``: The pin number to make available. Remember, ``pinNumber`` is the physical pin number on the Pi. 
 * ``options``: (Optional) Should be a string, such as ``input`` or ``input pullup``. You can specify whether the pin direction should be `input` or `output` (or `in` or `out`). You can additionally set the internal pullup / pulldown resistor by sepcifying `pullup` or `pulldown` (or `up` or `down`). If options isn't provided, it defaults to `output`. If a direction (`input` or `output`) is not specified (eg. only `up`), then the direction defaults to `output`.
-* ``callback``: (Optional) Will be called when the pin is available for use. May receive an error as the first argument if something went wrong.
 
-### .close(pinNumber, [callback])
+### .close(pinNumber)
 
 Aliased to ``.unexport``
 
 Closes ``pinNumber``.
 
 * ``pinNumber``: The pin number to close. Again, ``pinNumber`` is the physical pin number on the Pi.
-* ``callback``: (Optional) Will be called when the pin is closed. Again, may receive an error as the first argument.
 
-### .setDirection(pinNumber, direction, [callback])
+### .setDirection(pinNumber, direction)
 
 Changes the direction from ``input`` to ``output`` or vice-versa.
 
 * ``pinNumber``: As usual.
 * ``direction``: Either ``input`` or ``in`` or ``output`` or ``out``.
-* ``callback``: Will be called when direction change is complete. May receive an error as usual.
 
-### .getDirection(pinNumber, [callback])
+### .getDirection(pinNumber)
 
 Gets the direction of the pin. Acts like a getter for the method above.
 
 * ``pinNumber``: As usual
-* ``callback``: Will be called when the direction is received. The first argument could be an error. The second argument will either be ``in`` or ``out``. 
+* ``promise``: Will resolve to either ``in`` or ``out`` or rejected when the direction is received.
 
-### .read(pinNumber, [callback])
+### .read(pinNumber)
 
 Reads the current value of the pin. Most useful if the pin is in the ``input`` direction.
 
 * ``pinNumber``: As usual.
-* ``callback``: Will receive a possible error object as the first argument, and the value of the pin as the second argument. The value will be either ``0`` or ``1`` (numeric).
+* ``promise``: Will resolve to  either ``0`` or ``1`` (numeric).
 
 Example:
 ```javascript
@@ -299,13 +296,12 @@ gpio.read(16)
   })
 ```
 
-### .write(pinNumber, value, [callback])
+### .write(pinNumber, value)
 
 Writes ``value`` to ``pinNumber``. Will obviously fail if the pin is not in the ``output`` direction.
 
 * ``pinNumber``: As usual.
 * ``value``: Should be either a numeric ``0`` or ``1``. Any value that isn't ``0`` or ``1`` will be coerced to be boolean, and then converted to 0 (false) or 1 (true). Just stick to sending a numeric 0 or 1, will you? ;)
-* ``callback``: Will be called when the value is set. Again, might receive an error.
 
 ## Misc
 
