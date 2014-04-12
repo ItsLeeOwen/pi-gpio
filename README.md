@@ -1,16 +1,22 @@
 pi-gpio
 =======
 
-pi-gpio is a simple node.js based library to help access the GPIO of the Raspberry Pi (Debian Wheezy). It's modelled loosely around the built-in ``fs`` module.
+pi-gpio is a simple Q promise-based node.js library to help access the GPIO of the Raspberry Pi (Debian Wheezy). It's modelled loosely around the built-in ``fs`` module.
 
 ```javascript
 var gpio = require("pi-gpio");
 
-gpio.open(16, "output", function(err) {		// Open pin 16 for output
-	gpio.write(16, 1, function() {			// Set pin 16 high (1)
-		gpio.close(16);						// Close pin 16
-	});
-});
+// Open pin 16 for output
+gpio.open(16, "output")
+  .then(function() {
+    return gpio.write(16, 1);
+  })
+  .then(function() {
+    return gpio.close(16);
+  })
+  .then(function() {
+    console.log('all done');
+  });
 ```
 
 ## How you can help
@@ -283,10 +289,14 @@ Reads the current value of the pin. Most useful if the pin is in the ``input`` d
 
 Example:
 ```javascript
-gpio.read(16, function(err, value) {
-	if(err) throw err;
-	console.log(value);	// The current state of the pin
-});
+gpio.read(16)
+  .then(function(value) {
+    // current state of the pin
+    console.log(value);
+  })
+  .fail(function(error) {
+    console.error('uh oh', JSON.stringify(error));
+  })
 ```
 
 ### .write(pinNumber, value, [callback])
