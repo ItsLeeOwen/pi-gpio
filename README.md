@@ -3,6 +3,8 @@ pi-gpio
 
 pi-gpio is a simple Q promise-based node.js library to help access the GPIO of the Raspberry Pi (Debian Wheezy). It's modelled loosely around the built-in ``fs`` module.
 
+To learn more about promises:  https://github.com/kriskowal/q
+
 ```javascript
 var gpio = require("pi-gpio");
 
